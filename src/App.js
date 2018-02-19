@@ -1,8 +1,19 @@
-import React from 'react';
-
+import React from 'react'
+import reducer from './reducer'
+import { createStore } from 'redux'
 
 class App extends React.Component {
+
   render() {
+    const store = this.props.store
+
+    const vote = (id) => () => {
+      store.dispatch({
+        type: 'VOTE',
+        data: { id }
+      })
+    }
+
     const anecdotes = this.props.store.getState()
     return (
       <div>
@@ -14,7 +25,7 @@ class App extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button>vote</button>
+              <button onClick={vote(anecdote.id)}>vote</button>
             </div>
           </div>
         )}
