@@ -4,8 +4,23 @@ import { createStore } from 'redux'
 
 class App extends React.Component {
 
+  create = (event) => {
+    event.preventDefault()
+    const getId = () => (100000*Math.random()).toFixed(0)
+    this.props.store.dispatch({
+      type: 'NEW_ANECDOTE',
+      data: {
+        content: event.target.anecdote.value,
+        id: getId(),
+        votes: 0
+      }
+    })
+    event.target.anecdote.value = ''
+  }
+
   render() {
     const store = this.props.store
+
 
     const vote = (id) => () => {
       store.dispatch({
@@ -30,8 +45,8 @@ class App extends React.Component {
           </div>
         )}
         <h2>create new</h2>
-        <form>
-          <div><input /></div>
+        <form onSubmit={this.create}>
+          <div><input name="anecdote" /></div>
           <button>create</button> 
         </form>
       </div>

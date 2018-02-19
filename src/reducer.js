@@ -24,15 +24,17 @@ const reducer = (state = initialState, action) => {
   console.log('action', action)
   switch(action.type) {
     case 'VOTE':
-    const id = action.data.id
-    const anecdoteToChange = state.find(a => a.id === id)
-    const changedAnecdote = { ...anecdoteToChange,
+      const id = action.data.id
+      const anecdoteToChange = state.find(a => a.id === id)
+      const changedAnecdote = { ...anecdoteToChange,
       votes: anecdoteToChange.votes + 1 }
-    return state.map(a => a.id !== id ? a : changedAnecdote).sort((a, b) => {
-      if (a.votes < b.votes) return 1
-      if (a.votes > b.votes) return -1
-      return 0
-    })
+      return state.map(a => a.id !== id ? a : changedAnecdote).sort((a, b) => {
+        if (a.votes < b.votes) return 1
+        if (a.votes > b.votes) return -1
+        return 0
+        })
+    case 'NEW_ANECDOTE':
+      return [...state, action.data] 
   }
   return state
 }
